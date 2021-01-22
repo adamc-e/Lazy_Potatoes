@@ -2,11 +2,12 @@ const mongoose = require('mongoose');
 
 const tripSchema = new mongoose.Schema({
 	area: String,
-	time: Number,
+	time: String,
+	date: Date,
 	store: String,
 	quantity: Number,
 });
 
-const User = mongoose.model('trips', tripSchema);
+const Trip = mongoose.model('trips', tripSchema);
 
-module.exports = User;
+module.exports = Trip;
