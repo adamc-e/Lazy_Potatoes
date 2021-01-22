@@ -30,6 +30,12 @@ app.post('/api/newtrip', (req, res, next) => {
 	trip.save();
 });
 
+app.get('/api/alltrips', (req, res, next) => {
+	Trip.find({}, (err, doc) => {
+	res.json(doc)
+})
+});
+
 app.listen(port, () => {
 	console.log(`app listening at http://localhost:${port}`);
 });
