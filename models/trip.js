@@ -7,6 +7,7 @@ const tripSchema = new mongoose.Schema({
 	date: Date,
 	store: String,
 	quantity: Number,
+	requests: Array,
 });
 
 const Trip = mongoose.model('trips', tripSchema);
