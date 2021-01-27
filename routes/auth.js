@@ -22,8 +22,8 @@ router.post('/register', async (req, res) => {
 	});
 	try {
 		const saveUser = await user.save();
-		// const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-		// res.header('auth-token', token).send(token);
+		const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+		res.header('auth-token', token).send(token);
 	} catch (err) {
 		console.log(err);
 		res.status(400).send(err);
@@ -38,9 +38,9 @@ router.post('/login', async (req, res) => {
 	const validPass = await bcrypt.compare(req.body.password, user.password);
 	if (!validPass) return res.status(400).send('Invalid password');
 	res.send(user);
-	// const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-	// res.setHeader('Access-Control-Allow-Headers', 'token', token);
-	// res.header('auth-token', token).send(token);
+	const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+	res.setHeader('Access-Control-Allow-Headers', 'token', token);
+	res.header('auth-token', token).send(token);
 });
 
 router.put('/:id', async (req, res) => {
