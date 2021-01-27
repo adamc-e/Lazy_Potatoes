@@ -41,9 +41,6 @@ app.get('/api/alltrips', (req, res, next) => {
 	});
 });
 
-app.put('/api/addRequest', async (req, res) => {
-	const id = req.body.tripId;
-	const request = req.body;
 
 app.get('api/search', async (req, res) => {
 	try {
