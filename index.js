@@ -59,6 +59,17 @@ app.get('api/search', async (req, res) => {
 	}
 });
 
+app.put('/api/addRequest', async (req, res)=> {
+	const id = req.body.tripId
+	const request = req.body
+	const tripToUpdate = await Trip.updateOne(
+		{ _id: id },
+		{
+		$push: { requests: request },
+		}
+	  );
+	  res.send('success');
+})
 
 app.listen(port, () => {
 	console.log(`app listening at http://localhost:${port}`);
