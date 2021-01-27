@@ -55,6 +55,23 @@ app.get('/api/alltrips', (req, res) => {
 	});
 });
 
+app.get('api/search', async (req, res) => {
+	try {
+		let filter = {};
+		if (req.query.area) filter.area = req.query.area;
+		console.log(filter);
+		let trip = await Trip.find(filter);
+		console.log('trips', Trip);
+		if (trip.length === 0) {
+			return res.status(404).send({ err: `No area was found, try again ` });
+		}
+		res.json(Trip);
+	} catch (err) {
+		console.error(err);
+		res.status(500).send('Server Error');
+	}
+});
+
 app.put('/api/addRequest', async (req, res) => {
 	const id = req.body.tripId;
 	const request = req.body;
