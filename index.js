@@ -32,21 +32,21 @@ app.post('/api/newtrip', (req, res, next) => {
 
 app.get('/api/alltrips', (req, res, next) => {
 	Trip.find({}, (err, doc) => {
-	res.json(doc)
-})
+		res.json(doc);
+	});
 });
 
-app.put('/api/addRequest', async (req, res)=> {
-	const id = req.body.tripId
-	const request = req.body
+app.put('/api/addRequest', async (req, res) => {
+	const id = req.body.tripId;
+	const request = req.body;
 	const tripToUpdate = await Trip.updateOne(
 		{ _id: id },
 		{
-		$push: { requests: request },
+			$push: { requests: request },
 		}
-	  );
-	  res.send('success');
-})
+	);
+	res.send('success');
+});
 
 app.listen(port, () => {
 	console.log(`app listening at http://localhost:${port}`);
