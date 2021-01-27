@@ -20,22 +20,22 @@ app.use(express.urlencoded({ extended: true }));
 
 const db = mongoose.connection;
 
-// app.get('api/alltrips/search', async (req, res) => {
-// 	try {
-// 		let filter = {};
-// 		if (req.query.area) filter.area = req.query.area;
-// 		console.log(req.query);
-// 		let trip = await Trip.find(filter.area);
-// 		console.log('trips', trips);
-// 		if (trip.length === 0) {
-// 			return res.status(404).send({ err: `No area was found, try again ` });
-// 		}
-// 		res.json(trips);
-// 	} catch (err) {
-// 		console.error(err);
-// 		res.status(500).send('Server Error');
-// 	}
-// });
+app.get('/api/alltrips/search', async (req, res) => {
+	try {
+		let filter = {};
+		if (req.query.area) filter.area = req.query.area;
+		console.log(req.query);
+		let trip = await Trip.find(filter);
+
+		if (trip.length === 0) {
+			return res.status(404).send({ err: `No area was found, try again ` });
+		}
+		res.json(trip);
+	} catch (err) {
+		console.error(err);
+		res.status(500).send('Server Error');
+	}
+});
 
 app.use('/api/users', authRoute);
 // app.use('/api/trips', tripsRoute);
