@@ -7,7 +7,7 @@ const registerValidation = data => {
 		firstName: Joi.string().min(4).required(),
 		lastName: Joi.string().min(4).required(),
 		phoneNumber: Joi.string().min(10).required(),
-		points: Joi.number(20).required(),
+		points: Joi.number().required(),
 	});
 	return Joi.validate(data, schema);
 };
