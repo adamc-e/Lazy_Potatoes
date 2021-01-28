@@ -41,9 +41,15 @@ app.use('/api/users', authRoute);
 // app.use('/api/trips', tripsRoute);
 
 app.post('/api/newtrip', (req, res, next) => {
-	const trip = new Trip(req.body);
-	trip.save();
+	try {
+		const trip = new Trip(req.body);
+		trip.save();
+		res.send(`Your trip has been recorded`);
+	} catch {
+		console.error(err);
+	}
 });
+
 app.put('/api/addRequest', async (req, res) => {
 	const id = req.body.tripId;
 	const request = req.body;
