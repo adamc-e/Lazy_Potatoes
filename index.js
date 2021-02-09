@@ -10,7 +10,7 @@ const cors = require('cors');
 
 const connectDB = async () => {
 	try {
-		await mongoose.connect(process.env.mongoURI, {
+		await mongoose.connect("mongodb+srv://juliet:1312@cluster0.xwepi.mongodb.net/potatoes?retryWrites=true&w=majority", {
 			useNewUrlParser: true,
 			useCreateIndex: true,
 			useFindAndModify: false,
