@@ -43,55 +43,6 @@ router.post('/login', async (req, res) => {
 	res.header('auth-token', token).send(token);
 });
 
-router.put('/:id', async (req, res) => {
-	console.log(req.body);
-	const salt = await bcrypt.genSalt(10);
-	const hashPassword = await bcrypt.hash(req.body.password, salt);
-	const UpdatedUser = {
-		password: hashPassword,
-		firstName: req.body.firstName,
-		lastName: req.body.lastName,
-		phoneNumber: req.body.phoneNumber,
-		email: req.body.email,
-	};
-	try {
-		console.log('email', req.body.email);
-		console.log('id', req.params.id);
-		const user = await User.findOneAndUpdate(
-			{ _id: req.params.id },
-			{ $set: UpdatedUser },
-			{ new: true },
-			(err, UpdatedUser) => {
-				if (err) {
-					return res.status(400).json(err);
-				}
-				res.json(UpdatedUser);
-			}
-		);
-	} catch (err) {
-		console.log(err);
-	}
-});
 
-router.get('/:id/full', async (req, res) => {
-	const UserID = req.params.id;
-	const user = await User.findOne({ _id: UserID });
-	res.send(user);
-});
-
-router.get('/', async (req, res) => {
-	const user = await User.find({});
-	res.send(user);
-});
-
-router.get('/user', async (req, res) => {
-	try {
-		const user = await User.findOne({ _id: req.user.id });
-		res.json(user);
-	} catch (err) {
-		console.error(err.massage);
-		res.status(500).send('Server error');
-	}
-});
 
 module.exports = router;

@@ -1,11 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const port = 5000;
+const port = 5001;
 const mongoose = require('mongoose');
 const Trip = require('./models/trip');
 const authRoute = require('./routes/auth');
-// const tripsRoute = require('./routes/tripsRoute')
 const cors = require('cors');
 
 const connectDB = async () => {
@@ -24,20 +23,15 @@ const connectDB = async () => {
 };
 connectDB()
 
-// mongoose.connect(
-// 	'mongodb+srv://juliet:1312@cluster0.xwepi.mongodb.net/potatoes?retryWrites=true&w=majority',
-// 	{ useNewUrlParser: true, useUnifiedTopology: true },
-// 	() => console.log('connected to db')
-// );
 
 app.use(cors());
 app.use(express.json({ extended: false }));
 app.use(express.urlencoded({ extended: true }));
 
-// const db = mongoose.connection;
 
 app.use('/api/users', authRoute);
-// app.use('/api/trips', tripsRoute);
+
+
 
 app.get('/api/alltrips', async (req, res) => {
 	try {
@@ -48,9 +42,6 @@ app.get('/api/alltrips', async (req, res) => {
 		console.error(err)
 
 	}
-	// Trip.find({}, (err, doc) => {
-	// 	res.json(doc);
-	// });
 });
 
 app.post('/api/newtrip', (req, res, next) => {
@@ -63,10 +54,6 @@ app.post('/api/newtrip', (req, res, next) => {
 	}
 });
 
-// app.put('/api/addRequest', async (req, res) => {
-// 	const id = req.body.tripId;
-// 	const request = req.body;
-// });
 
 
 
@@ -74,9 +61,8 @@ app.get('/api/alltrips/search', async (req, res) => {
 	try {
 		let filter = {};
 		if (req.query.area) filter.area = req.query.area;
-		console.log(req.query);
 		let trip = await Trip.find(filter);
-
+		
 		if (trip.length === 0) {
 			return res.status(404).send({ err: `No area was found, try again ` });
 		}
@@ -95,10 +81,11 @@ app.put('/api/addRequest', async (req, res) => {
 		{
 			$push: { requests: request },
 		}
-	);
-	res.send('success');
-});
-
-app.listen(port, () => {
-	console.log(`app listening at http://localhost:${port}`);
-});
+		);
+		res.send('success');
+	});
+	
+	
+	app.listen(port, () => {
+		console.log(`app listening at http://localhost:${port}`);
+	});
